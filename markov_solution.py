@@ -2,8 +2,9 @@
 
 import os
 import sys
+
 from random import choice
-from twitter import Twitter
+import twitter
 
 
 def open_and_read_file(filenames):
@@ -69,7 +70,6 @@ def tweet(chains):
     # Use Python os.environ to get at environmental variables
     # Note: you must run `source secrets.sh` before running this file
     # to make sure these environmental variables are set.
-
     api = twitter.Api(
         consumer_key=os.environ['TWITTER_CONSUMER_KEY'],
         consumer_secret=os.environ['TWITTER_CONSUMER_SECRET'],
