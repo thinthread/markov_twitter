@@ -6,7 +6,6 @@ import sys
 from random import choice
 import twitter
 
-
 def open_and_read_file(filenames):
     """Take a list of files. Open them, read them, and return one long string."""
 
@@ -83,7 +82,6 @@ def tweet(chains):
         response = raw_input("Enter to tweet again [q to quit] > ")
         if response.lower() == 'q':
             break
-
 
 # Get the filenames from the user through a command line prompt, ex:
 # python markov.py green-eggs.txt shakespeare.txt
