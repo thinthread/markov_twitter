@@ -6,13 +6,15 @@ import sys
 from random import choice
 import twitter
 
+import io
+
 def open_and_read_file(filenames):
     """Take a list of files. Open them, read them, and return one long string."""
 
     body = ""
 
     for filename in filenames:
-        text_file = open(filename)
+        text_file = io.open(filename, encoding="utf-8")
         body = body + text_file.read()
         text_file.close()
 
@@ -35,7 +37,7 @@ def make_chains(text_string):
 
         chains[key].append(value)
 
-        # or we could replace the last three lines with:
+        # or could replace the last three lines with:
         #    chains.setdefault(key, []).append(value)
 
     return chains
@@ -47,12 +49,6 @@ def make_text(chains):
     key = choice(chains.keys())
     words = [key[0], key[1]]
     while key in chains:
-        # Keep looping until we have a key that isn't in the chains
-        # (which would mean it was the end of our original text).
-        #
-        # Note that for long texts (like a full book), this might mean
-        # it would run for a very long time.
-
         word = choice(chains[key])
         if len(" ".join(words)) + len(word) < 140:
             words.append(word)
@@ -64,11 +60,8 @@ def make_text(chains):
 
 
 def tweet(chains):
-    """Create a tweet and send it to the Internet."""
+    """Create a tweet and send it to the Twitter account to post."""
 
-    # Use Python os.environ to get at environmental variables
-    # Note: you must run `source secrets.sh` before running this file
-    # to make sure these environmental variables are set.
     api = twitter.Api(
         consumer_key=os.environ['TWITTER_CONSUMER_KEY'],
         consumer_secret=os.environ['TWITTER_CONSUMER_SECRET'],
@@ -79,19 +72,15 @@ def tweet(chains):
         status = api.PostUpdate(make_text(chains))
         print status.text
         print  # blank line
-        response = raw_input("Enter to tweet again [q to quit] > ")
+        response = raw_input("Press the 'enter' key to tweet, or 'q' to  quit program: ")
         if response.lower() == 'q':
             break
 
-# Get the filenames from the user through a command line prompt, ex:
-# python markov.py green-eggs.txt shakespeare.txt
+
 filenames = sys.argv[1:]
 
-# Open the files and turn them into one long string
 text = open_and_read_file(filenames)
 
-# Get a Markov chain
 chains = make_chains(text)
 
-# Your task is to write a new function tweet, that will take chains as input
 tweet(chains)

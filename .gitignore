@@ -1,3 +1,4 @@
+test_markov_tweets.py
 secrets.sh
 *.pyc
 env/
