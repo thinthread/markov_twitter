@@ -2,3 +2,5 @@ test_markov_tweets.py
 secrets.sh
 *.pyc
 env/
+run.sh
+green-eggs.txt

@@ -1,5 +1,4 @@
 """A Markov chain generator that can tweet random messages."""
-
 import os
 import sys
 
