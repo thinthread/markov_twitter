@@ -3,4 +3,3 @@ secrets.sh
 *.pyc
 env/
 run.sh
-green-eggs.txt
